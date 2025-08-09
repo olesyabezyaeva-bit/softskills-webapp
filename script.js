@@ -121,16 +121,34 @@ function loadStep() {
 }
 
 function showDailyTask() {
-  questionEl.textContent = "Задание на день:";
-  answersEl.innerHTML = `<p style="font-weight:bold; margin-bottom: 20px;">${questions[currentBlock].chains[currentChain].dailyTask}</p>`;
+   questionEl.textContent = "Задание на день:";
   adviceEl.textContent = "";
 
-  answersEl.innerHTML += `
-    <button id="nextChainBtn" style="margin-right:10px;">Перейти к следующей цепочке</button>
-    <button id="backMenuBtn">Назад в меню</button>
-  `;
+  // Создаём контейнер для текста и кнопок
+  answersEl.innerHTML = "";
 
-  document.getElementById("nextChainBtn").onclick = () => {
+  const taskText = document.createElement("p");
+  taskText.style.fontWeight = "bold";
+  taskText.style.marginBottom = "20px";
+  taskText.textContent = questions[currentBlock].chains[currentChain].dailyTask;
+  answersEl.appendChild(taskText);
+
+  // Кнопка "Перейти к следующей цепочке"
+  const nextChainBtn = document.createElement("button");
+  nextChainBtn.id = "nextChainBtn";
+  nextChainBtn.textContent = "Перейти к следующей цепочке";
+  nextChainBtn.className = "answer";   // Важно: класс "answer"
+  nextChainBtn.style.marginRight = "10px";
+  answersEl.appendChild(nextChainBtn);
+
+  // Кнопка "Назад в меню"
+  const backMenuBtn = document.createElement("button");
+  backMenuBtn.id = "backMenuBtn";
+  backMenuBtn.textContent = "Назад в меню";
+  backMenuBtn.className = "answer";   // Важно: класс "answer"
+  answersEl.appendChild(backMenuBtn);
+
+  nextChainBtn.onclick = () => {
     dailyTaskShown = true;
     currentStep = 0;
     currentChain++;
@@ -140,6 +158,20 @@ function showDailyTask() {
     }
     saveProgress();
     loadStep();
+  };
+
+  backMenuBtn.onclick = () => {
+    currentBlock = null;
+    currentChain = 0;
+    currentStep = 0;
+    dailyTaskShown = false;
+    saveProgress();
+    showMenu();
+  };
+
+  dailyTaskShown = true;
+  saveProgress();
+
   };
 
   document.getElementById("backMenuBtn").onclick = () => {
@@ -180,6 +212,7 @@ function selectAnswer(selectedIndex) {
 }
 
 loadQuestions();
+
 
 
 
