@@ -1,0 +1,47 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+.container {
+  max-width: 400px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+button.answer {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #eee;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; } button.answer.correct {
+  background-color: #4caf50;
+  color: white;
+}
+button.answer.almost {
+  background-color: #ffc107;
+  color: #333;
+}
+button.answer.wrong {
+  background-color: #ffcccc;
+  color: #333;
+}
+#nextBtn {
+  margin-top: 15px;
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
