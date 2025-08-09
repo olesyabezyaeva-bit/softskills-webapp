@@ -2,7 +2,7 @@
 const TELEGRAM = window.Telegram?.WebApp || null;
 
 // Replace with your hero image URL (uploaded to GitHub / Netlify) 
-const HERO_IMG_URL = "https://github.com/olesyabezyaeva-bit/softskills-webapp/blob/main/hum.png";
+const HERO_IMG_URL = "hum.png";
 
 // DOM
 const introEl = document.getElementById("intro"); const startBtn = document.getElementById("startBtn");
@@ -323,6 +323,7 @@ btnBack.onclick = ()=> { goBack(); };
 
 // initialize
 loadQuestions();
+
 
 
 
