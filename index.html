@@ -1,16 +1,95 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" /> <title>Soft Skills Trainer</title> <link rel="stylesheet" href="style.css" /> <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Soft Skills Trainer — Mini App</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <div class="container">
-    <h2 id="question">Загрузка...</h2>
-    <div id="answers"></div>
-    <p id="advice"></p>
-    <button id="nextBtn" style="display:none;">Далее</button>
+  <div class="stage">
+    <!-- header: score + progress -->
+    <header class="topbar">
+      <div class="left">
+        <button id="btnMainMenu" class="icon-btn" title="Главное меню">🏠</button>
+        <button id="btnBack" class="icon-btn" title="Назад">↩️</button>
+      </div>
+      <div class="center">
+        <div id="score">Баллы: 0</div>
+        <div class="progress-wrap">
+          <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          <div id="progressText" class="progress-text">0%</div>
+        </div>
+      </div>
+      <div class="right"></div>
+    </header>
+
+    <!-- main content -->
+    <main class="main">
+      <!-- Intro / animation -->
+      <section id="intro" class="screen intro">
+        <div class="clouds" id="clouds">
+          <div class="cloud c1"></div>
+          <div class="cloud c2"></div>
+          <div class="cloud c3"></div>
+        </div>
+        <div class="hero-wrap" id="heroWrap" aria-hidden="true">
+          <img id="heroImage" src="" alt="hero" />
+          <div class="bulb" id="bulb">💡</div>
+        </div>
+        <button id="startBtn" class="cta">Начать</button>
+      </section>
+
+      <!-- Menu with blocks (shows hero picture + block cards) -->
+      <section id="menu" class="screen menu hidden">
+        <div class="hero-large">
+          <img id="menuHero" src="" alt="hero large" />
+          <div class="bulb-floating">💡</div>
+        </div>
+        <h2 class="menu-title">Выберите тему для прокачки</h2>
+        <div id="blocksContainer" class="blocks"></div>
+      </section>
+
+      <!-- Question screen -->
+      <section id="quiz" class="screen quiz hidden">
+        <div class="card">
+          <div class="situation-tag">СИТУАЦИЯ</div>
+          <h3 id="question" class="question-text">Загрузка...</h3>
+          <div id="answers" class="answers"></div>
+          <div id="advice" class="advice"></div>
+        </div>
+      </section>
+
+      <!-- Daily task / chain complete -->
+      <section id="daily" class="screen daily hidden">
+        <div class="card">
+          <h3>Задание на день</h3>
+          <p id="dailyText" class="daily-text"></p>
+          <div class="answers">
+            <button id="dailyNext" class="answer">Продолжить</button>
+            <button id="dailyMenu" class="answer">Назад в меню</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Final / block complete -->
+      <section id="blockComplete" class="screen block-complete hidden">
+        <div class="card">
+          <h3 id="completeTitle">Блок пройден</h3>
+          <p id="completeText">Ваш счёт: 0</p>
+          <div class="answers">
+            <button id="completeMenu" class="answer">Назад в меню</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <small>Soft skills trainer — MVP</small>
+    </footer>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
