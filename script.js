@@ -1,8 +1,8 @@
 const tg = window.Telegram.WebApp;
 
 let questions = [];
-let currentBlock = 0;
-let currentChain = 0;
+let currentBlock = null;  // null — меню, иначе номер блока 
+let currentChain = 0; 
 let currentStep = 0;
 
 const questionEl = document.getElementById("question");
@@ -10,18 +10,21 @@ const answersEl = document.getElementById("answers");
 const adviceEl = document.getElementById("advice");
 const nextBtn = document.getElementById("nextBtn");
 
-// Ключ для localStorage (чтобы уникально сохранить прогресс) 
 const STORAGE_KEY = "softskills_progress";
 
 async function loadQuestions() {
   const response = await fetch('questions.json');
   questions = await response.json();
   loadProgress();
-  loadStep();
+  if (currentBlock === null) {
+    showMenu();
+  } else {
+    loadStep();
+  }
 }
 
 function saveProgress() {
-  const progress = { currentBlock, currentChain, currentStep };
+  const progress = { currentBlock, currentChain, currentStep, dailyTaskShown };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
 
 function loadProgress() {
@@ -29,26 +32,79 @@ function loadProgress() {
   if (saved) {
     try {
       const progress = JSON.parse(saved);
-      currentBlock = progress.currentBlock ?? 0;
+      currentBlock = progress.currentBlock ?? null;
       currentChain = progress.currentChain ?? 0;
       currentStep = progress.currentStep ?? 0;
+      dailyTaskShown = progress.dailyTaskShown ?? false;
     } catch (e) {
-      // Если JSON битый — игнорируем
-      currentBlock = 0;
+      currentBlock = null;
       currentChain = 0;
       currentStep = 0;
+      dailyTaskShown = false;
     }
+  } else {
+    currentBlock = null; // показываем меню при первой загрузке
+    dailyTaskShown = false;
   }
+}
+
+let dailyTaskShown = false;
+
+function showMenu() {
+  questionEl.textContent = "Выберите блок для прокачки навыков:";
+  adviceEl.textContent = "";
+  nextBtn.style.display = "none";
+  answersEl.innerHTML = "";
+
+  questions.forEach((block, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = block.title;
+    btn.className = "answer";
+    btn.onclick = () => {
+      currentBlock = i;
+      currentChain = 0;
+      currentStep = 0;
+      dailyTaskShown = false;
+      saveProgress();
+      loadStep();
+    };
+    answersEl.appendChild(btn);
+  });
 }
 
 function loadStep() {
   adviceEl.textContent = "";
   nextBtn.style.display = "none";
 
+  if (currentBlock === null) {
+    showMenu();
+    return;
+  }
+
   if (currentBlock >= questions.length) {
     questionEl.textContent = "Вы прошли все блоки! Поздравляем 🎉";
     answersEl.innerHTML = "";
     return;
+  }
+
+  if (currentStep >= questions[currentBlock].chains[currentChain].steps.length) {
+    if (!dailyTaskShown && questions[currentBlock].chains[currentChain].dailyTask) {
+      showDailyTask();
+      return;
+    } else {
+      dailyTaskShown = false;
+      currentStep = 0;
+      currentChain++;
+      if (currentChain >= questions[currentBlock].chains.length) {
+        currentChain = 0;
+        currentBlock++;
+        if (currentBlock >= questions.length) {
+          questionEl.textContent = "Вы прошли все блоки! Поздравляем 🎉";
+          answersEl.innerHTML = "";
+          return;
+        }
+      }
+    }
   }
 
   const step = questions[currentBlock].chains[currentChain].steps[currentStep];
@@ -64,34 +120,66 @@ function loadStep() {
   });
 }
 
-function selectAnswer(selectedIndex) {
-  const step = questions[currentBlock].chains[currentChain].steps[currentStep];
-  const buttons = answersEl.querySelectorAll("button");
+function showDailyTask() {
+  questionEl.textContent = "Задание на день:";
+  answersEl.innerHTML = `<p style="font-weight:bold; margin-bottom: 20px;">${questions[currentBlock].chains[currentChain].dailyTask}</p>`;
+  adviceEl.textContent = "";
 
-  buttons.forEach((btn, idx) => {
-    btn.disabled = true;
-    const ansType = step.answers[idx].type;
-    btn.classList.add(ansType);
-  });
+  answersEl.innerHTML += `
+    <button id="nextChainBtn" style="margin-right:10px;">Перейти к следующей цепочке</button>
+    <button id="backMenuBtn">Назад в меню</button>
+  `;
 
-  adviceEl.textContent = step.answers[selectedIndex].advice;
-  nextBtn.style.display = "block";
-  saveProgress();
-}
-
-nextBtn.onclick = () => {
-  currentStep++;
-  if (currentStep >= questions[currentBlock].chains[currentChain].steps.length) {
+  document.getElementById("nextChainBtn").onclick = () => {
+    dailyTaskShown = true;
     currentStep = 0;
     currentChain++;
     if (currentChain >= questions[currentBlock].chains.length) {
       currentChain = 0;
       currentBlock++;
     }
-  }
+    saveProgress();
+    loadStep();
+  };
+
+  document.getElementById("backMenuBtn").onclick = () => {
+    currentBlock = null;
+    currentChain = 0;
+    currentStep = 0;
+    dailyTaskShown = false;
+    saveProgress();
+    showMenu();
+  };
+
+  dailyTaskShown = true;
   saveProgress();
-  loadStep();
-};
+}
+
+function selectAnswer(selectedIndex) {
+  const step = questions[currentBlock].chains[currentChain].steps[currentStep];
+  const buttons = answersEl.querySelectorAll("button");
+
+  buttons.forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === selectedIndex) {
+      const ansType = step.answers[idx].type;
+      btn.classList.add(ansType);
+    } else {
+      btn.style.backgroundColor = "#ddd";
+      btn.style.color = "#666";
+    }
+  });
+
+  adviceEl.textContent = step.answers[selectedIndex].advice;
+
+  setTimeout(() => {
+    currentStep++;
+    saveProgress();
+    loadStep();
+  }, 1000);
+}
 
 loadQuestions();
+
+
 
