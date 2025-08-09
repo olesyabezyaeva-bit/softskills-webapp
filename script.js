@@ -278,7 +278,8 @@ function updateScoreAndProgress(){
   progressText.innerText = `${pct}%`;
 }
 
-// BACK button — review previous answer (one step back) function goBack(){
+// BACK button — review previous answer (one step back) 
+function goBack(){
   if(history.length === 0){
     // if in quiz, return to menu
     showMenu();
@@ -322,6 +323,7 @@ btnBack.onclick = ()=> { goBack(); };
 
 // initialize
 loadQuestions();
+
 
 
 
