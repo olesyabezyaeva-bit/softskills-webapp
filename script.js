@@ -10,7 +10,8 @@ const answersEl = document.getElementById("answers");
 const adviceEl = document.getElementById("advice");
 const nextBtn = document.getElementById("nextBtn");
 
-// Ключ для localStorage (чтобы уникально сохранить прогресс) const STORAGE_KEY = "softskills_progress";
+// Ключ для localStorage (чтобы уникально сохранить прогресс) 
+const STORAGE_KEY = "softskills_progress";
 
 async function loadQuestions() {
   const response = await fetch('questions.json');
@@ -93,3 +94,4 @@ nextBtn.onclick = () => {
 };
 
 loadQuestions();
+
