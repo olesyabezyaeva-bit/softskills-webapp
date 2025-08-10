@@ -57,7 +57,7 @@ function resetProgress() {
 }
 
 function showMenu() {
-    questionEl.textContent = "Выберите блок для прокачки:";
+    questionEl.textContent = "Выберите тему для прокачки:";
     adviceEl.textContent = "";
     answersEl.innerHTML = "";
 
@@ -135,7 +135,7 @@ function selectAnswer(selectedIndex) {
 }
 
 function showResult() {
-    questionEl.textContent = "Результат цепочки:";
+    questionEl.textContent = "Результат:";
     adviceEl.textContent = `Вы набрали ${score} баллов`;
     answersEl.innerHTML = `
         <button id="nextChainBtn" class="answer">Далее</button>
@@ -177,6 +177,7 @@ backBtn.onclick = () => {
 };
 
 loadQuestions();
+
 
 
 
