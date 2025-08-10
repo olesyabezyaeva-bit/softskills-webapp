@@ -138,8 +138,8 @@ function showResult() {
     questionEl.textContent = "Результат цепочки:";
     adviceEl.textContent = `Вы набрали ${score} баллов`;
     answersEl.innerHTML = `
-        <button id="nextChainBtn">Следующая цепочка</button>
-        <button id="menuReturnBtn">Меню</button>
+        <button id="nextChainBtn" class="answer">Далее</button>
+
     `;
 
     document.getElementById("nextChainBtn").onclick = () => {
@@ -177,4 +177,7 @@ backBtn.onclick = () => {
 };
 
 loadQuestions();
+
+
+
 
