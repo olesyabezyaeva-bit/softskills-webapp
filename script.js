@@ -135,11 +135,10 @@ function selectAnswer(selectedIndex) {
 }
 
 function showResult() {
-    questionEl.textContent = "Результат:";
+    questionEl.textContent = "Результат цепочки:";
     adviceEl.textContent = `Вы набрали ${score} баллов`;
     answersEl.innerHTML = `
         <button id="nextChainBtn" class="answer">Далее</button>
-
     `;
 
     document.getElementById("nextChainBtn").onclick = () => {
@@ -177,7 +176,6 @@ backBtn.onclick = () => {
 };
 
 loadQuestions();
-
 
 
 
