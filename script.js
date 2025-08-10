@@ -179,5 +179,3 @@ backBtn.onclick = () => {
 loadQuestions();
 
 
-
-
