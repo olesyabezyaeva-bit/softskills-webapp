@@ -57,7 +57,7 @@ function resetProgress() {
 }
 
 function showMenu() {
-    questionEl.textContent = "Выберите тему для прокачки:";
+    questionEl.textContent = "Выберите блок для прокачки:";
     adviceEl.textContent = "";
     answersEl.innerHTML = "";
 
@@ -138,7 +138,8 @@ function showResult() {
     questionEl.textContent = "Результат цепочки:";
     adviceEl.textContent = `Вы набрали ${score} баллов`;
     answersEl.innerHTML = `
-        <button id="nextChainBtn" class="answer">Далее</button>
+        <button id="nextChainBtn" class="answer">Следующая цепочка</button>
+        <button id="menuReturnBtn" class="answer">Меню</button>
     `;
 
     document.getElementById("nextChainBtn").onclick = () => {
