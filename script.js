@@ -132,7 +132,7 @@ function selectAnswer(selectedIndex) {
         currentStep++;
         saveProgress();
         loadStep();
-    }, 800);
+    }, 5000);
 }
 
 function showResult() {
@@ -178,3 +178,4 @@ backBtn.onclick = () => {
 };
 
 loadQuestions();
+
