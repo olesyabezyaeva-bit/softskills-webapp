@@ -15,7 +15,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #007bff;
+    background: #fba0e3;
     padding: 10px;
 }
 
@@ -76,6 +76,7 @@ button.answer.neutral {
     background: #eee;
     color: #333;
 }
+
 
 
 
