@@ -1,6 +1,9 @@
 body {
     font-family: Arial, sans-serif;
-    background: #e6f2ff;
+    background-image: url ("cactus.png");
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center;
     margin: 0;
     padding: 0;
     display: flex;
@@ -73,4 +76,5 @@ button.answer.neutral {
     background: #eee;
     color: #333;
 }
+
 
