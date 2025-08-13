@@ -55,7 +55,9 @@ button.answer {
     background: #eee;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease; }
+    transition: background-color 0.3s ease;
+    color: black;
+}
 
 button.answer.correct {
     background: #4caf50 !important;
@@ -76,6 +78,7 @@ button.answer.neutral {
     background: #eee;
     color: black;
 }
+
 
 
 
