@@ -20,7 +20,7 @@ body {
 }
 
 .icon-btn {
-    background: #007bff;
+    background: #fba0e3;
     border: 2px solid white;
     color: white;
     font-size: 22px;
@@ -34,7 +34,7 @@ body {
 }
 
 .icon-btn:hover {
-    background: #0056b3;
+    background: #fba0e3;
 }
 
 .container {
@@ -76,6 +76,7 @@ button.answer.neutral {
     background: #eee;
     color: #333;
 }
+
 
 
 
